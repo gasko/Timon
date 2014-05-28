@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Incomming Phone Call" >
+
+        <SwitchPreference
+            android:key="pref_user_phone_call_filter"
+            android:title="Filtering"
+            android:summaryOff="No filtering of incomming phone calls"
+            android:summaryOn="Filtering active"
+            android:switchTextOn="On"
+            android:switchTextOff="Off" >
+        </SwitchPreference>
+        <CheckBoxPreference
+            android:title="VemRingde?"
+            android:dependency="pref_user_phone_call_filter">
+        </CheckBoxPreference>
+        
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Send Mail" >
+
+        <EditTextPreference
+            android:defaultValue="[TIMON]"
+            android:key="prefUserMailPrefix"
+            android:summary="Set subject prefix for all mail sent to you by this app"
+            android:title="Subject Prefix" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="prefUserMailPrefix"
+            android:summary="Set subject prefix for all mail sent to you by this app"
+            android:title="Mail Adress" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
