@@ -1,30 +1,30 @@
 package com.ahrgahh.timon;
 
 public class Call {
-	
-		  private long id;
-		  private String comment;
 
-		  public long getId() {
-		    return id;
-		  }
+	private long id;
+	private String comment;
 
-		  public void setId(long id) {
-		    this.id = id;
-		  }
+	public long getId() {
+		return id;
+	}
 
-		  public String getComment() {
-		    return comment;
-		  }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-		  public void setComment(String comment) {
-		    this.comment = comment;
-		  }
+	public String getComment() {
+		return comment;
+	}
 
-		  // Will be used by the ArrayAdapter in the ListView
-		  @Override
-		  public String toString() {
-		    return comment;
-		  }
-		
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	// Will be used by the ArrayAdapter in the ListView
+	@Override
+	public String toString() {
+		return comment;
+	}
+
 }

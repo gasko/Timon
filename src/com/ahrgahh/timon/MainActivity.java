@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 
 
-				final GMailSender sender = new GMailSender("timon@ahrgahh.com", "timon!14");
+				final GMailSender sender = new GMailSender(SecretConstants.EMAIL_ADDRESS, SecretConstants.EMAIL_PASSWORD);
 
 				new AsyncTask<Void, Void, Void>() {
 
