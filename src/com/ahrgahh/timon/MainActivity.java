@@ -26,8 +26,6 @@ public class MainActivity extends ActionBarActivity {
 		send.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-
-
 				final GMailSender sender = new GMailSender(SecretConstants.EMAIL_ADDRESS, SecretConstants.EMAIL_PASSWORD);
 
 				new AsyncTask<Void, Void, Void>() {
@@ -41,7 +39,6 @@ public class MainActivity extends ActionBarActivity {
 					protected Void doInBackground(Void... params)
 					{
 						try {
-
 							sender.sendMail("This is Subject",   
 									"This is Body",   
 									"TIMON",   
@@ -107,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
 		String number = phoneEditText.getText().toString(); 
 
 		if( number != null ) {
-			new MissatSamtal().verifyPhoneNumber(view, number);
+			new MissatSamtal().verifyPhoneNumber(number);
 		}
 	}
 	

@@ -19,21 +19,16 @@ public class MissatSamtal {
 	public final static String format = "xml";
 	public final static String numberOfCompanies = "1";
 	public final static String apiUrl = "http://api.missatsamtal.se/?";
-	
+
 	public MissatSamtal() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	private class numberVerificationResult {
-		public String statusNbr;
-		public String hygieneResult; 
-	}
-
-	private numberVerificationResult parseXML( XmlPullParser parser ) throws XmlPullParserException, IOException {
+	private static Call parseXML( XmlPullParser parser ) throws XmlPullParserException, IOException {
 
 		int eventType = parser.getEventType();
-		numberVerificationResult result = new numberVerificationResult();
+		Call result = new Call();
 
 		while( eventType!= XmlPullParser.END_DOCUMENT) {
 			String name = null;
@@ -45,12 +40,12 @@ public class MissatSamtal {
 
 				if( name.equals("Error")) {
 					System.out.println("Web API Error!");
-				}
+				} 
 				else if ( name.equals("name")) {
-					result.statusNbr = parser.nextText();
+					result.name = parser.nextText();
 				}
 				else if (name.equals("number")) {
-					result.hygieneResult = parser.nextText();
+					result.number = parser.nextText();
 				}
 
 				break;
@@ -65,6 +60,7 @@ public class MissatSamtal {
 		return result;       
 	}
 
+	/*
 	private class CallAPI extends AsyncTask<String, String, String> {
 
 		@Override
@@ -107,7 +103,7 @@ public class MissatSamtal {
 			} else if (result.statusNbr != null) {
 				resultToDisplay = result.statusNbr;
 			} else
-				resultToDisplay ="faan0";
+				resultToDisplay ="error";
 
 			return resultToDisplay;      
 		}
@@ -118,14 +114,54 @@ public class MissatSamtal {
 		}
 
 	} // end CallAPI 
-	
-	public void verifyPhoneNumber(View view, String number) {
-		if( number != null ) {
-			
-			String urlString = apiUrl + "action=" + action + "&format=" + format + "&number=" + number + "&numberOfCompanies=" + numberOfCompanies;
+	 */
 
-			new CallAPI().execute(urlString); 
+	public static Call verifyPhoneNumber(String number) {
+		if( number != null ) {
+			String urlString = apiUrl + "action=" + action + "&format=" + format + "&number=" + number + "&numberOfCompanies=" + numberOfCompanies;
+			//String urlString=params[0]; // URL to call
+			String resultToDisplay = "";
+			Call result = null;
+			InputStream in = null;
+
+			// HTTP Get
+			try {		
+				URL url = new URL(urlString);
+				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+				in = new BufferedInputStream(urlConnection.getInputStream());
+			} catch (Exception e ) {
+				System.out.println(e.getMessage());
+				//return e.getMessage();
+			}    
+
+			// Parse XML
+			XmlPullParserFactory pullParserFactory;
+
+			try {
+				pullParserFactory = XmlPullParserFactory.newInstance();
+				XmlPullParser parser = pullParserFactory.newPullParser();
+
+				parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+				parser.setInput(in, null);
+				result = parseXML(parser);
+			} catch (XmlPullParserException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			if (result.number != null && result.name != null){
+				resultToDisplay = result.name + " " + result.number;
+			} else if (result.number != null ) {
+				resultToDisplay = result.number;
+			} else if (result.name != null) {
+				resultToDisplay = result.name;
+			} else
+				resultToDisplay ="error";
+
+			return result;      
 		}
+		return null;
 	}
-	
+
 }

@@ -4,6 +4,8 @@ public class Call {
 
 	private long id;
 	private String comment;
+	public String name ="?";
+	public String number ="?";
 
 	public long getId() {
 		return id;
